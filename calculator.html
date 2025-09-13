@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MyCalc - Advanced Calculator</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <!-- Custom Favicon -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAArNJREFUWEftl0FIVFEUhr9zZ8YaFUFoE6LWxk2IiRBB0EIIWrUSXIqRUbuIXLWrlUGbNhK0CFy0KYI2LYSgVRG0UNq0CTKQCGkTiCAizNw7cY7vOR7nzfNNxzFy0YXLvHvP+f/vnnPufe8JG3zJBvtTCWD/KzDngEoy82j8RjKxdq9AZ9lxHBFUBFUPVR8Qgh/6eGIj+KhG+EGAeB5xPRQLG1XF84PQr00sQlSAF6pEsRw+MTL1vZm5v9sE7R0dSDxP0vGIHQ9HwDMxrusSLcTEhMBBwvcDPC8IjCQgSMYhmsvi52dInThF7PLVJl7/BkjfvQOOg8bjaF8fTkcHaAx+QJzMmOtS7OvDS0+BBNpibXpRUZIDAzjpNFoqkX/0kNhQEj/IUPB8HLeV5ME+3HSawqWLxMZuo6kpvL6DJO4/wH30gNlr1wkePCZx7z7FG9cpTr4kO3SKxMRjis+fMTs8bN5Nn79A7M5dZpJJ/PQUbrEYhapQjCiI2isQxdpIxM2o0Q6mowha22g9dZr09WsQi0E+j7x5S8fpIbIvJmk/P0r28SOCz19oOzmI19eHd3iQ9lPDzA4PI0UPf2YGd3bWhDvR3U32zRtaYjGC7m5ajx1HZ2bo7OxE9u07EQTzBaQF0oIMPBGyvk/rxYs0AQxeugKtbchClqbjx0jcuQtNTWQPHDCL6HzyFMl46Nw8wcgo7uQk+c4u8PJQzON2d+MsLjJ/7jw6N0fHxA0KN29RPHSI+VSSYC6L29ODzs6yZ/K5yW3sCrT1HgFx0eVlCuMT7Lp1E+ntRQsFpJBHOzrwP35CXZdgaYm5kycQEXRxESkUCL58Jt7bS2FyktjwMJ2vX7G0fz/F5WX2vn9nWzhF0zD+/RNYzxFtuA+sCeB3z/hvKrB2Tv5+5CdQTVMhqhzl5QAAAABJRU5ErkJggg==">
+    <style>
+        /* Created by Daksh - 2023 */
+        body {
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+            background: #000;
+            position: relative;
+            overflow: hidden; /* Prevent scrollbars */
+        }
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            opacity: 0.7; /* Custom touch */
+        }
+        /* Custom scrollbar - personal preference */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4A00E0;
+            border-radius: 4px;
+        }
+        .calculator-card {
+            max-width: 550px;
+            width: 95%;
+            margin: 20px auto;
+            border-radius: 25px;
+            backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            padding: 1.5rem !important;
+        }
+        .calculator-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3),
+                        0 0 0 1px rgba(255, 255, 255, 0.1);
+        }
+        .calculator-card.dark {
+            background: rgba(35, 37, 38, 0.95);
+            color: #fff;
+        }
+        .calculator-card h4 {
+            font-weight: 600;
+            color: #4A00E0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 1.1rem;
+        }
+        .calculator-card.dark h4 {
+            color: #8E2DE2;
+        }
+        .btn-calc {
+            min-width: 60px;
+            min-height: 55px;
+            font-size: 1.2rem;
+            margin: 4px;
+            border-radius: 15px;
+            border: none;
+            transition: all 0.2s ease;
+            font-weight: 500;
+        }
+        .btn-calc:hover {
+            transform: scale(1.05);
+            z-index: 1;
+        }
+        .btn-calc:active {
+            transform: scale(0.95);
+            box-shadow: 0 0 15px rgba(74, 0, 224, 0.4);
+        }
+        .display-box {
+            font-size: 1.4rem;
+            margin-bottom: 12px;
+            border-radius: 12px;
+            border: 2px solid rgba(74, 0, 224, 0.1);
+            padding: 12px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+        .calculator-card.dark .display-box {
+            background: rgba(35, 37, 38, 0.9);
+            border-color: rgba(142, 45, 226, 0.2);
+            color: #fff;
+        }
+        .display-box:focus {
+            border-color: #4A00E0;
+            box-shadow: 0 0 0 3px rgba(74, 0, 224, 0.1);
+        }
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+        .theme-toggle:hover {
+            transform: rotate(45deg);
+        }
+        .btn-secondary {
+            background: #f8f9fa;
+            color: #4A00E0;
+            border: 1px solid rgba(74, 0, 224, 0.1);
+        }
+        .btn-info {
+            background: rgba(74, 0, 224, 0.1);
+            color: #4A00E0;
+        }
+        .calculator-card.dark .btn-secondary {
+            background: #2d3436;
+            color: #fff;
+            border-color: rgba(255, 255, 255, 0.1);
+        }
+        .calculator-card.dark .btn-info {
+            background: rgba(142, 45, 226, 0.2);
+            color: #fff;
+        }
+    </style>
+    <script>
+        let memory = 0;
+        function docalcu(val) {
+            let input = document.getElementById("input-box");
+            input.value += val;
+        }
+        function doclear() {
+            document.getElementById("input-box").value = "";
+            document.getElementById("output-box").value = "";
+        }
+        function doeval() {
+            let exp = document.getElementById("input-box").value;
+            try {
+                // Replace % with /100 for percentage
+                exp = exp.replace(/%/g, "/100");
+                let res = eval(exp);
+                document.getElementById("output-box").value = res;
+            } catch (e) {
+                document.getElementById("output-box").value = "Error";
+            }
+        }
+        function dosqrt() {
+            let input = document.getElementById("input-box");
+            let val = input.value;
+            if(val) {
+                input.value = Math.sqrt(eval(val));
+            }
+        }
+        function domem(action) {
+            let input = document.getElementById("input-box");
+            switch(action) {
+                case 'M+': memory += Number(eval(input.value)||0); break;
+                case 'M-': memory -= Number(eval(input.value)||0); break;
+                case 'MR': input.value = memory; break;
+                case 'MC': memory = 0; break;
+            }
+        }
+        // My custom theme toggle with icon change
+        function themeToggle() {
+            let card = document.getElementById('calc-card');
+            let icon = document.querySelector('.theme-toggle i');
+            card.classList.toggle('dark');
+            
+            // Easter egg: Random encouraging messages
+            const messages = [
+                "Nice choice!", "Looking good!", "Great pick!",
+                "Perfect!", "Cool theme!", "Awesome!"
+            ];
+            
+            if(card.classList.contains('dark')) {
+                icon.className = 'fas fa-sun';
+                // Sometimes show a message (30% chance)
+                if(Math.random() < 0.3) {
+                    showToast(messages[Math.floor(Math.random() * messages.length)]);
+                }
+            } else {
+                icon.className = 'fas fa-moon';
+            }
+            
+            // Save preference
+            localStorage.setItem('calculator-theme', card.classList.contains('dark') ? 'dark' : 'light');
+        }
+        
+        // Simple toast message function
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                background: rgba(74, 0, 224, 0.9);
+                color: white;
+                padding: 8px 16px;
+                border-radius: 20px;
+                font-size: 0.9em;
+                z-index: 1000;
+                opacity: 0;
+                transition: opacity 0.3s;
+            `;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.style.opacity = '1', 100);
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => toast.remove(), 300);
+            }, 2000);
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#ffffff"
+                    },
+                    "shape": {
+                        "type": "circle"
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": true
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#ffffff",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": true,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    }
+                },
+                "retina_detect": true
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div id="particles-js"></div>
+    <div id="calc-card" class="calculator-card p-4" style="z-index: 2;">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4 class="mb-0">
+                <i class="fas fa-calculator me-2"></i>
+                <span class="calculator-title">MyCalc v2.3</span>
+                <!-- My signature easter egg -->
+                <span class="signature" style="font-size: 0.6em; opacity: 0.6; margin-left: 8px;">by Daksh</span>
+            </h4>
+            <span class="theme-toggle" onclick="themeToggle()" title="Switch Theme">
+                <i class="fas fa-moon"></i>
+            </span>
+        </div>
+        <input type="text" class="form-control display-box mb-2" id="output-box" placeholder="0" readonly>
+        <input type="text" class="form-control display-box mb-3" id="input-box" placeholder="Type here...">
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-outline-dark w-100" onclick="domem('MC')">MC</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-outline-dark w-100" onclick="domem('MR')">MR</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-outline-dark w-100" onclick="domem('M+')">M+</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-outline-dark w-100" onclick="domem('M-')">M−</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-danger w-100" onclick="doclear()">C</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-warning w-100" onclick="dosqrt()">√</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-warning w-100" onclick="docalcu('%')">%</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-primary w-100" onclick="docalcu('/')">÷</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('7')">7</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('8')">8</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('9')">9</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-primary w-100" onclick="docalcu('*')">×</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('4')">4</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('5')">5</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('6')">6</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-primary w-100" onclick="docalcu('-')">−</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('1')">1</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('2')">2</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('3')">3</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-primary w-100" onclick="docalcu('+')">+</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-6"><button class="btn btn-calc btn-light w-100" onclick="docalcu('0')">0</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-light w-100" onclick="docalcu('.')">.</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-success w-100" onclick="doeval()">=</button></div>
+        </div>
+        <div class="row g-1 mb-2">
+            <div class="col-3"><button class="btn btn-calc btn-info w-100" onclick="docalcu('(')">(</button></div>
+            <div class="col-3"><button class="btn btn-calc btn-info w-100" onclick="docalcu(')')">)</button></div>
+            <div class="col-6"><span class="text-muted small d-flex align-items-center justify-content-end">Memory: <span id="mem-val" class="ms-2">0</span></span></div>
+        </div>
+        <!-- <div class="row g-1">
+            <div class="col-6"><button class="btn btn-calc btn-outline-danger w-100" onclick="domem('MC')">MC</button></div>
+            <div class="col-6"><span class="text-muted small">Memory: <span id="mem-val">0</span></span></div>
+        </div> -->
+    </div>
+    <script>
+        // Update memory display
+        setInterval(() => {
+            document.getElementById('mem-val').textContent = memory;
+        }, 500);
+    </script>
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
